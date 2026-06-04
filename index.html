@@ -568,7 +568,7 @@ body{
         <p>Software para rectificadoras</p>
       </div>
     </div>
-  
+  </div>
 
   <div class="nav-group">Principal</div>
   <a class="nav-itemx active" onclick="showScreen('dashboard',this)"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a>
@@ -1282,7 +1282,7 @@ function buildExtraMobileCardsV2(){
       return `<div class="mobile-data-card">
         <div class="mobile-data-top"><b>${cells[1]||cells[0]||'Registro'}</b><span class="badgex b-gray">${cells[0]||'—'}</span></div>
         ${cells.map((c,i)=>`<div class="line"><span>${heads[i]||'Dato'}</span><span>${c}</span></div>`).join('')}
-        <div class="mobile-data-actions"><button class="btn btn-soft"><i class="bi bi-pencil"></i> Editar</button><button class="btn btn-blue" onclick="${id==='qr_publicos'?'showScreen(\\'portal_cliente\\')':''}"><i class="bi bi-eye"></i> Ver</button></div>
+        <div class="mobile-data-actions"><button class="btn btn-soft"><i class="bi bi-pencil"></i> Editar</button><button class="btn btn-blue" onclick="${id==='qr_publicos'?'showScreen(&quot;portal_cliente&quot;)':''}"><i class="bi bi-eye"></i> Ver</button></div>
       </div>`
     }).join('');
     const wrap=container.querySelector('.table-responsive');
