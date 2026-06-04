@@ -867,11 +867,21 @@ simpleModule('mano','Mano de obra','Servicios técnicos configurables para cada 
 ],'Nueva mano de obra');
 simpleModule('clientes','Clientes','Base comercial y técnica de clientes.',['Nombre','RUC/Cédula','Teléfono','Email','Estado'],[
  ['JUAN CARLOS PAREDES','0912345678','0981234567','cliente01@rectipro.demo','<span class="badgex b-ok">Activo</span>'],
- ['MARCO ANTONIO SUÁREZ','0923456789','0992345678','cliente02@rectipro.demo','<span class="badgex b-ok">Activo</span>']
+ ['MARCO ANTONIO SUÁREZ','0923456789','0992345678','cliente02@rectipro.demo','<span class="badgex b-ok">Activo</span>'],
+ ['LUIS FERNANDO ZAMBRANO','0934567890','0973456789','cliente03@rectipro.demo','<span class="badgex b-ok">Activo</span>'],
+ ['DIEGO ALEJANDRO VERA','0945678901','0964567890','cliente04@rectipro.demo','<span class="badgex b-ok">Activo</span>'],
+ ['GABRIEL EDUARDO MORENO','0956789012','0955678901','cliente05@rectipro.demo','<span class="badgex b-ok">Activo</span>'],
+ ['RICARDO JAVIER BENÍTEZ','0967890123','0946789012','cliente06@rectipro.demo','<span class="badgex b-ok">Activo</span>']
 ],'Nuevo cliente');
 simpleModule('mecanicos','Mecánicos','Responsables, contactos y ubicación.',['Nombre','Teléfono','Ciudad','Especialidad','Estado'],[
  ['CARLOS MENDOZA','0973456789','SECTOR SUR','Rectificación general','<span class="badgex b-ok">Activo</span>'],
- ['JORGE RAMÍREZ','0964567890','SECTOR OESTE','Motores diésel','<span class="badgex b-ok">Activo</span>']
+ ['JORGE RAMÍREZ','0964567890','SECTOR OESTE','Motores diésel','<span class="badgex b-ok">Activo</span>'],
+ ['MIGUEL ANDRADE','0955678901','SECTOR NORTE','Cabezotes y válvulas','<span class="badgex b-ok">Activo</span>'],
+ ['FERNANDO MORALES','0946789012','SECTOR ESTE','Blocks y bancadas','<span class="badgex b-ok">Activo</span>'],
+ ['ROBERTO SÁNCHEZ','0937890123','SECTOR CENTRO','Cigüeñales','<span class="badgex b-ok">Activo</span>'],
+ ['LUIS HERRERA','0928901234','SECTOR INDUSTRIAL','Rectificación fina','<span class="badgex b-ok">Activo</span>'],
+ ['DIEGO SALAZAR','0919012345','SECTOR COMERCIAL','Ensamble técnico','<span class="badgex b-ok">Activo</span>'],
+ ['ANDRÉS CEVALLOS','0901234567','SECTOR TÉCNICO','Control de calidad','<span class="badgex b-ok">Activo</span>']
 ],'Nuevo mecánico');
 
 document.getElementById('bodega').innerHTML=`
@@ -966,11 +976,21 @@ function enhanceDynamicMobileCards(){
     ],
     clientes:[
       ['JUAN CARLOS PAREDES','0912345678','0981234567','cliente01@rectipro.demo','Activo'],
-      ['MARCO ANTONIO SUÁREZ','0923456789','0992345678','cliente02@rectipro.demo','Activo']
+      ['MARCO ANTONIO SUÁREZ','0923456789','0992345678','cliente02@rectipro.demo','Activo'],
+      ['LUIS FERNANDO ZAMBRANO','0934567890','0973456789','cliente03@rectipro.demo','Activo'],
+      ['DIEGO ALEJANDRO VERA','0945678901','0964567890','cliente04@rectipro.demo','Activo'],
+      ['GABRIEL EDUARDO MORENO','0956789012','0955678901','cliente05@rectipro.demo','Activo'],
+      ['RICARDO JAVIER BENÍTEZ','0967890123','0946789012','cliente06@rectipro.demo','Activo']
     ],
     mecanicos:[
       ['CARLOS MENDOZA','0973456789','SECTOR SUR','Rectificación general','Activo'],
-      ['JORGE RAMÍREZ','0964567890','SECTOR OESTE','Motores diésel','Activo']
+      ['JORGE RAMÍREZ','0964567890','SECTOR OESTE','Motores diésel','Activo'],
+      ['MIGUEL ANDRADE','0955678901','SECTOR NORTE','Cabezotes y válvulas','Activo'],
+      ['FERNANDO MORALES','0946789012','SECTOR ESTE','Blocks y bancadas','Activo'],
+      ['ROBERTO SÁNCHEZ','0937890123','SECTOR CENTRO','Cigüeñales','Activo'],
+      ['LUIS HERRERA','0928901234','SECTOR INDUSTRIAL','Rectificación fina','Activo'],
+      ['DIEGO SALAZAR','0919012345','SECTOR COMERCIAL','Ensamble técnico','Activo'],
+      ['ANDRÉS CEVALLOS','0901234567','SECTOR TÉCNICO','Control de calidad','Activo']
     ]
   };
   const labels={
