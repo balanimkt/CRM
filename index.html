@@ -479,6 +479,37 @@ body{
   .kanban-col{min-width:88%}
 }
 
+
+/* ===== CORRECCIÓN MENÚ MÓVIL: ocultar barra inferior cuando el menú está abierto ===== */
+@media(max-width:900px){
+  body.menu-open .mobile-bottom-nav{
+    transform:translateY(120%);
+    pointer-events:none;
+    opacity:0;
+  }
+  .mobile-bottom-nav{
+    transition:transform .22s ease, opacity .22s ease;
+  }
+  .sidebar{
+    padding-bottom:120px;
+    max-height:100dvh;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .sidebar.open{
+    box-shadow:18px 0 42px rgba(15,23,42,.32);
+  }
+  .nav-itemx{
+    min-height:46px;
+  }
+  .brand{
+    position:sticky;
+    top:0;
+    z-index:2;
+    background:#0f172a;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -798,6 +829,7 @@ function toggleMenu(open){
   if(!sidebar || !backdrop) return;
   sidebar.classList.toggle('open', open);
   backdrop.classList.toggle('show', open);
+  document.body.classList.toggle('menu-open', open);
 }
 function setBottomActive(index){
   document.querySelectorAll('#mobileBottomNav button').forEach((b,i)=>b.classList.toggle('active',i===index));
