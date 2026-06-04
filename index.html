@@ -1,1 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RectiPro ERP — Demo Comercial</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<style>
+:root{
+  --primary:#2563eb;
+  --primary-2:#1d4ed8;
+  --primary-soft:#eff6ff;
+  --dark:#0f172a;
+  --muted:#64748b;
+  --body:#f6f8fb;
+  --panel:#ffffff;
+  --line:#e5e7eb;
+  --success:#16a34a;
+  --warning:#f59e0b;
+  --danger:#dc2626;
+  --radius:18px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--body);
+  font-family:Inter,Segoe UI,system-ui,-apple-system,Arial,sans-serif;
+  color:#1e293b;
+  font-size:14px;
+}
+.app-shell{display:flex;min-height:100vh}
+.sidebar{
+  width:280px;
+  background:#0f172a;
+  color:#cbd5e1;
+  position:fixed;
+  inset:0 auto 0 0;
+  overflow:auto;
+  z-index:10;
+  box-shadow:10px 0 30px rgba(15,23,42,.14);
+}
+.brand{
+  padding:24px 22px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.brand-wrap{display:flex;align-items:center;gap:14px}
+.mark{
+  width:50px;height:50px;border-radius:16px;
+  background:linear-gradient(145deg,#38bdf8,#2563eb 55%,#1e40af);
+  display:grid;place-items:center;color:white;font-weight:900;
+  box-shadow:0 12px 30px rgba(37,99,235,.45);
+}
+.brand h1{font-size:20px;margin:0;color:white;letter-spacing:.2px}
+.brand p{font-size:11px;margin:2px 0 0;color:#94a3b8}
+.nav-group{padding:18px 16px 6px;font-size:11px;color:#64748b;text-transform:uppercase;font-weight:800;letter-spacing:.9px}
+.nav-itemx{
+  margin:3px 12px;
+  border-radius:14px;
+  padding:11px 13px;
+  display:flex;align-items:center;gap:12px;
+  color:#cbd5e1;text-decoration:none;
+  cursor:pointer;
+  transition:.18s ease;
+}
+.nav-itemx i{font-size:17px;width:22px;text-align:center}
+.nav-itemx:hover{background:rgba(255,255,255,.08);color:white;transform:translateX(2px)}
+.nav-itemx.active{
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:white;
+  box-shadow:0 10px 24px rgba(37,99,235,.28);
+}
+.content{
+  margin-left:280px;
+  min-height:100vh;
+  width:calc(100% - 280px);
+}
+.topbar{
+  height:74px;background:rgba(255,255,255,.86);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:8;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;
+}
+.page-title h2{font-size:21px;margin:0;color:var(--dark);font-weight:800}
+.page-title p{font-size:12px;margin:3px 0 0;color:var(--muted)}
+.user-pill{
+  display:flex;align-items:center;gap:10px;
+  background:#f8fafc;border:1px solid var(--line);
+  padding:8px 12px;border-radius:999px;color:#334155;font-weight:700;
+}
+.main{padding:28px 32px 48px}
+.hero{
+  border-radius:28px;
+  padding:30px;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(56,189,248,.28), transparent 30%),
+    radial-gradient(circle at 85% 20%, rgba(37,99,235,.24), transparent 32%),
+    linear-gradient(135deg,#0f172a,#1e293b);
+  color:white;
+  overflow:hidden;
+  position:relative;
+  box-shadow:0 22px 50px rgba(15,23,42,.18);
+}
+.hero:after{
+  content:"";
+  position:absolute;right:-80px;bottom:-80px;width:270px;height:270px;
+  background:rgba(255,255,255,.06);border-radius:50%;
+}
+.hero h3{font-size:29px;font-weight:900;margin:0}
+.hero p{color:#cbd5e1;max-width:760px;margin:10px 0 0;font-size:15px}
+.hero-actions{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+.btn-premium{
+  border:0;border-radius:14px;padding:11px 18px;font-weight:800;
+  background:linear-gradient(135deg,#38bdf8,#2563eb);
+  color:white;
+  box-shadow:0 12px 26px rgba(37,99,235,.28);
+}
+.btn-premium:hover{color:white;transform:translateY(-1px)}
+.btn-ghost{
+  border:1px solid rgba(255,255,255,.22);
+  background:rgba(255,255,255,.08);
+  color:white;border-radius:14px;padding:11px 18px;font-weight:800;
+}
+.btn-soft{
+  border:1px solid var(--line);
+  background:white;
+  color:#334155;
+  border-radius:13px;
+  padding:9px 14px;
+  font-weight:800;
+}
+.btn-blue{
+  background:var(--primary);
+  color:white;border:0;border-radius:13px;
+  padding:10px 16px;font-weight:800;
+}
+.btn-blue:hover{background:var(--primary-2);color:white}
+.cardx{
+  background:var(--panel);
+  border:1px solid rgba(226,232,240,.8);
+  border-radius:var(--radius);
+  box-shadow:0 10px 26px rgba(15,23,42,.06);
+}
+.stat{
+  padding:19px;
+  display:flex;align-items:center;gap:14px;
+}
+.iconbox{
+  width:47px;height:47px;border-radius:15px;display:grid;place-items:center;font-size:20px;
+}
+.stat small{color:var(--muted);font-weight:700}
+.stat h4{margin:0;font-size:24px;font-weight:900;color:var(--dark)}
+.stat .trend{font-size:11px;color:var(--success);font-weight:800}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px}
+.section-head h4{margin:0;font-size:20px;font-weight:900;color:var(--dark)}
+.section-head p{margin:2px 0 0;color:var(--muted);font-size:12px}
+.table-modern{margin:0}
+.table-modern thead th{
+  background:#f8fafc!important;
+  color:#64748b;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  border-bottom:1px solid var(--line);
+  padding:13px 16px;
+}
+.table-modern tbody td{
+  padding:15px 16px;
+  vertical-align:middle;
+  border-color:#eef2f7;
+}
+.table-modern tbody tr:hover{background:#f8fafc}
+.order-id{font-weight:900;color:var(--primary)}
+.motor{font-weight:800;color:#334155}
+.subtext{font-size:12px;color:#94a3b8}
+.badgex{
+  display:inline-flex;align-items:center;gap:6px;
+  border-radius:999px;padding:6px 10px;
+  font-size:11px;font-weight:900;
+}
+.b-rec{background:#dbeafe;color:#1d4ed8}.b-pro{background:#fef3c7;color:#92400e}
+.b-ok{background:#dcfce7;color:#166534}.b-danger{background:#fee2e2;color:#991b1b}
+.b-gray{background:#f1f5f9;color:#475569}
+.screen{display:none}.screen.active{display:block}
+.form-card{padding:24px}
+.form-section-title{font-size:14px;color:#0f172a;font-weight:900;margin-bottom:13px;display:flex;align-items:center;gap:8px}
+.form-control,.form-select{
+  border-radius:13px;
+  border:1px solid #dbe3ef;
+  padding:11px 13px;
+}
+.form-control:focus,.form-select:focus{box-shadow:0 0 0 .2rem rgba(37,99,235,.12);border-color:#93c5fd}
+.detail-header{
+  background:linear-gradient(135deg,#ffffff,#f8fbff);
+  border:1px solid #dbeafe;
+  border-radius:22px;
+  padding:22px;
+  box-shadow:0 10px 26px rgba(15,23,42,.05);
+}
+.total-card{text-align:center;padding:18px}
+.total-card small{color:var(--muted);font-weight:800}
+.total-card h3{font-size:24px;margin:4px 0 0;font-weight:900}
+.kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.kanban-col{
+  border:1px solid #e2e8f0;
+  background:#f8fafc;
+  border-radius:22px;
+  padding:15px;
+  min-height:390px;
+}
+.kanban-col h5{font-size:14px;font-weight:900;color:#334155;margin-bottom:14px}
+.ticket{
+  background:white;
+  border-radius:18px;
+  padding:15px;
+  margin-bottom:13px;
+  border:1px solid #e2e8f0;
+  box-shadow:0 8px 18px rgba(15,23,42,.05);
+}
+.ticket b{color:#0f172a}.ticket .bar{height:7px;border-radius:999px;background:#dbeafe;margin-top:12px;overflow:hidden}
+.ticket .bar span{display:block;height:100%;background:var(--primary);border-radius:999px}
+.module-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.module-card{padding:22px;transition:.18s}
+.module-card:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(15,23,42,.09)}
+.module-card i{font-size:26px;color:var(--primary)}
+.module-card h5{font-weight:900;margin:12px 0 4px;color:var(--dark)}
+.module-card p{color:var(--muted);margin:0;font-size:13px}
+.searchbar{
+  background:white;border:1px solid var(--line);border-radius:18px;padding:14px;
+}
+.demo-note{
+  background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:16px;padding:13px 16px;font-weight:700;
+}
+@media(max-width:1100px){
+  .kanban,.module-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:900px){
+  .sidebar{width:0;transform:translateX(-100%)}
+  .content{margin-left:0;width:100%}
+  .kanban,.module-grid{grid-template-columns:1fr}
+  .topbar{padding:0 18px}.main{padding:22px 16px}
+}
+</style>
+</head>
+<body>
+<div class="app-shell">
 
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-wrap">
+      <div class="mark">RP</div>
+      <div>
+        <h1>RectiPro ERP</h1>
+        <p>Software para rectificadoras</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-group">Principal</div>
+  <a class="nav-itemx active" onclick="showScreen('dashboard',this)"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a>
+  <a class="nav-itemx" onclick="showScreen('presentacion',this)"><i class="bi bi-stars"></i> Presentación</a>
+
+  <div class="nav-group">Órdenes</div>
+  <a class="nav-itemx" onclick="showScreen('ordenes',this)"><i class="bi bi-clipboard2-check"></i> Órdenes de trabajo</a>
+  <a class="nav-itemx" onclick="showScreen('crear',this)"><i class="bi bi-plus-circle"></i> Nueva orden</a>
+  <a class="nav-itemx" onclick="showScreen('detalle',this)"><i class="bi bi-file-earmark-text"></i> Detalle de orden</a>
+  <a class="nav-itemx" onclick="showScreen('pizarra',this)"><i class="bi bi-kanban"></i> Pizarra de producción</a>
+
+  <div class="nav-group">Operación</div>
+  <a class="nav-itemx" onclick="showScreen('repuestos',this)"><i class="bi bi-box-seam"></i> Repuestos</a>
+  <a class="nav-itemx" onclick="showScreen('mano',this)"><i class="bi bi-tools"></i> Mano de obra</a>
+  <a class="nav-itemx" onclick="showScreen('bodega',this)"><i class="bi bi-arrow-left-right"></i> Bodega / Kardex</a>
+
+  <div class="nav-group">Administración</div>
+  <a class="nav-itemx" onclick="showScreen('clientes',this)"><i class="bi bi-people"></i> Clientes</a>
+  <a class="nav-itemx" onclick="showScreen('mecanicos',this)"><i class="bi bi-person-badge"></i> Mecánicos</a>
+  <a class="nav-itemx" onclick="showScreen('cobrar',this)"><i class="bi bi-cash-coin"></i> Cuentas por cobrar</a>
+</aside>
+
+<section class="content">
+  <header class="topbar">
+    <div class="page-title">
+      <h2 id="pageTitle">Dashboard</h2>
+      <p id="pageSubtitle">Control operativo, financiero y técnico de la rectificadora</p>
+    </div>
+    <div class="d-flex gap-2 align-items-center">
+      <button class="btn btn-soft d-none d-md-inline-flex"><i class="bi bi-bell"></i></button>
+      <div class="user-pill"><i class="bi bi-person-circle"></i> Administrador</div>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <section id="dashboard" class="screen active">
+      <div class="hero mb-4">
+        <h3>Panel inteligente para rectificadoras de motores</h3>
+        <p>Administra órdenes de trabajo, producción, repuestos, mecánicos, abonos, cuentas por cobrar y reportes desde una sola plataforma profesional.</p>
+        <div class="hero-actions">
+          <button class="btn-premium" onclick="showScreen('crear')"><i class="bi bi-plus-circle me-1"></i> Crear orden</button>
+          <button class="btn-ghost" onclick="showScreen('presentacion')"><i class="bi bi-play-circle me-1"></i> Ver presentación</button>
+        </div>
+      </div>
+
+      <div class="row g-3 mb-4">
+        <div class="col-6 col-xl-2"><div class="cardx stat"><div class="iconbox bg-primary-subtle text-primary"><i class="bi bi-clipboard2-check"></i></div><div><small>Total órdenes</small><h4>23</h4><div class="trend">+2 hoy</div></div></div></div>
+        <div class="col-6 col-xl-2"><div class="cardx stat"><div class="iconbox bg-info-subtle text-info"><i class="bi bi-clock-history"></i></div><div><small>En proceso</small><h4>20</h4><div class="trend">Activo</div></div></div></div>
+        <div class="col-6 col-xl-2"><div class="cardx stat"><div class="iconbox bg-success-subtle text-success"><i class="bi bi-people"></i></div><div><small>Clientes</small><h4>1.486</h4><div class="trend">Base real</div></div></div></div>
+        <div class="col-6 col-xl-2"><div class="cardx stat"><div class="iconbox bg-warning-subtle text-warning"><i class="bi bi-wallet2"></i></div><div><small>Parciales</small><h4>7</h4><div class="trend">Abonos</div></div></div></div>
+        <div class="col-6 col-xl-2"><div class="cardx stat"><div class="iconbox bg-danger-subtle text-danger"><i class="bi bi-cash-stack"></i></div><div><small>Por cobrar</small><h4>$4.280</h4><div class="trend text-danger">Pendiente</div></div></div></div>
+        <div class="col-6 col-xl-2"><div class="cardx stat"><div class="iconbox bg-success-subtle text-success"><i class="bi bi-receipt"></i></div><div><small>Facturado</small><h4>$928</h4><div class="trend">Mes actual</div></div></div></div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-xl-8">
+          <div class="cardx p-3">
+            <div class="section-head">
+              <div><h4>Últimas órdenes</h4><p>Resumen de trabajos ingresados y estado de cuenta</p></div>
+              <button class="btn btn-blue" onclick="showScreen('ordenes')"><i class="bi bi-eye me-1"></i> Ver todas</button>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-modern align-middle">
+                <thead><tr><th>OT</th><th>Motor</th><th>Mecánico</th><th>Estado</th><th>Cuenta</th><th class="text-end">Total</th></tr></thead>
+                <tbody id="ordersDashboard"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4">
+          <div class="cardx p-4 h-100">
+            <div class="section-head"><div><h4>Estados</h4><p>Distribución actual</p></div></div>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between fw-bold mb-1"><span>Recibido</span><span>74%</span></div>
+              <div class="progress rounded-pill" style="height:10px"><div class="progress-bar" style="width:74%"></div></div>
+            </div>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between fw-bold mb-1"><span>En proceso</span><span>13%</span></div>
+              <div class="progress rounded-pill" style="height:10px"><div class="progress-bar bg-warning" style="width:13%"></div></div>
+            </div>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between fw-bold mb-1"><span>Anulado</span><span>13%</span></div>
+              <div class="progress rounded-pill" style="height:10px"><div class="progress-bar bg-danger" style="width:13%"></div></div>
+            </div>
+            <div class="demo-note mt-4"><i class="bi bi-info-circle me-1"></i> Demo visual. La versión real se conecta a base de datos, usuarios y reportes.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="presentacion" class="screen">
+      <div class="hero mb-4">
+        <h3>RectiPro ERP: una plataforma lista para vender por suscripción</h3>
+        <p>Diseñada para talleres de rectificación que necesitan controlar producción, inventario, finanzas y comunicación con clientes sin depender de hojas sueltas.</p>
+        <div class="hero-actions">
+          <button class="btn-premium"><i class="bi bi-whatsapp me-1"></i> Solicitar demostración</button>
+          <button class="btn-ghost" onclick="showScreen('dashboard')">Ingresar al demo</button>
+        </div>
+      </div>
+      <div class="module-grid">
+        <div class="cardx module-card"><i class="bi bi-clipboard2-check"></i><h5>Órdenes inteligentes</h5><p>Registro completo del motor, diagnóstico, mecánico, estados, fotos y valores.</p></div>
+        <div class="cardx module-card"><i class="bi bi-kanban"></i><h5>Pizarra de producción</h5><p>Seguimiento visual del trabajo: recibido, en proceso, terminado y entregado.</p></div>
+        <div class="cardx module-card"><i class="bi bi-cash-coin"></i><h5>Control financiero</h5><p>Abonos, saldos pendientes, cuentas por cobrar y facturación.</p></div>
+        <div class="cardx module-card"><i class="bi bi-box-seam"></i><h5>Inventario y bodega</h5><p>Ingreso, egreso, stock, repuestos, artículos y kardex.</p></div>
+        <div class="cardx module-card"><i class="bi bi-person-workspace"></i><h5>Mecánicos y operarios</h5><p>Asignación de trabajos, pagos y control por responsable.</p></div>
+        <div class="cardx module-card"><i class="bi bi-qr-code"></i><h5>Portal y QR</h5><p>Consulta pública para clientes, enlaces y evidencia del avance.</p></div>
+      </div>
+    </section>
+
+    <section id="ordenes" class="screen">
+      <div class="cardx p-4">
+        <div class="section-head">
+          <div><h4>Órdenes de trabajo</h4><p>Consulta, filtra y gestiona todos los trabajos del taller.</p></div>
+          <button class="btn btn-blue" onclick="showScreen('crear')"><i class="bi bi-plus-circle me-1"></i> Nueva orden</button>
+        </div>
+        <div class="searchbar mb-3">
+          <div class="row g-2">
+            <div class="col-md-4"><input class="form-control" placeholder="Buscar por cliente, motor, mecánico o número de OT"></div>
+            <div class="col-md-2"><select class="form-select"><option>Todos los estados</option><option>Recibido</option><option>En proceso</option></select></div>
+            <div class="col-md-2"><input type="date" class="form-control"></div>
+            <div class="col-md-2"><input type="date" class="form-control"></div>
+            <div class="col-md-2"><button class="btn btn-blue w-100"><i class="bi bi-search me-1"></i> Buscar</button></div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-modern align-middle">
+            <thead><tr><th>OT</th><th>Fecha</th><th>Cliente</th><th>Motor</th><th>Mecánico</th><th>Img</th><th>Estado</th><th>Cuenta</th><th class="text-end">Total</th><th></th></tr></thead>
+            <tbody id="ordersList"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="crear" class="screen">
+      <div class="cardx form-card">
+        <div class="section-head">
+          <div><h4>Nueva orden de trabajo <span class="badgex b-rec">OT #24</span></h4><p>Registra cliente, motor, diagnóstico, fechas y responsable.</p></div>
+          <button class="btn btn-soft" onclick="showScreen('ordenes')"><i class="bi bi-arrow-left me-1"></i> Volver</button>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <div class="form-section-title"><i class="bi bi-person"></i> Datos del cliente</div>
+            <div class="row g-2 mb-3"><div class="col-md-8"><input class="form-control" placeholder="Buscar cliente por nombre, RUC o teléfono"></div><div class="col-md-4"><button class="btn btn-blue w-100">Nuevo</button></div></div>
+            <input class="form-control mb-3" placeholder="Cliente esporádico o referencia">
+            <div class="form-section-title"><i class="bi bi-clipboard-pulse"></i> Diagnóstico y observaciones</div>
+            <textarea class="form-control mb-3" rows="4" placeholder="Diagnóstico inicial del motor..."></textarea>
+            <textarea class="form-control" rows="3" placeholder="Observaciones internas"></textarea>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-section-title"><i class="bi bi-gear-wide-connected"></i> Datos del motor</div>
+            <div class="row g-2 mb-3">
+              <div class="col-md-6"><input class="form-control" placeholder="Placa / identificación"></div>
+              <div class="col-md-6"><input class="form-control" placeholder="Vehículo"></div>
+            </div>
+            <select class="form-select mb-3"><option>Seleccionar motor</option><option>CHEVROLET LUV D-MAX DOHC 2.4</option><option>TOYOTA LAND CRUISER F 1.5</option><option>HYUNDAI TUCSON IX 2.0</option></select>
+            <select class="form-select mb-3"><option>Procedencia: Local</option><option>Importado</option><option>Otro taller</option></select>
+            <div class="form-section-title"><i class="bi bi-person-badge"></i> Responsable y fechas</div>
+            <select class="form-select mb-3"><option>Mecánico responsable</option><option>MST. IVAN LEON</option><option>MST. ALVARO VERA</option><option>MST. EDGAR BRIONES</option></select>
+            <div class="row g-2">
+              <div class="col-md-6"><label class="subtext">Ingreso</label><input type="datetime-local" class="form-control"></div>
+              <div class="col-md-6"><label class="subtext">Entrega estimada</label><input type="datetime-local" class="form-control"></div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end gap-2 mt-4">
+          <button class="btn btn-soft">Guardar borrador</button>
+          <button class="btn btn-blue" onclick="alert('Demo visual: aquí se guardaría la orden en la base de datos.')"><i class="bi bi-check2-circle me-1"></i> Crear orden</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="detalle" class="screen">
+      <div class="detail-header mb-4">
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+          <div>
+            <h3 class="mb-1 fw-black">Orden de trabajo #21 <span class="badgex b-rec">Recibido</span></h3>
+            <p class="mb-0 text-muted">CHEVROLET LUV D-MAX DOHC 2.4 · MST. IVAN LEON · Ingreso 01/06/2026</p>
+          </div>
+          <div class="d-flex gap-2 flex-wrap">
+            <button class="btn btn-soft"><i class="bi bi-printer me-1"></i> Imprimir</button>
+            <button class="btn btn-soft"><i class="bi bi-camera me-1"></i> Fotos</button>
+            <button class="btn btn-blue"><i class="bi bi-receipt me-1"></i> Facturar</button>
+          </div>
+        </div>
+      </div>
+      <div class="row g-3 mb-4">
+        <div class="col-md-3"><div class="cardx total-card"><small>Total orden</small><h3>$726.80</h3></div></div>
+        <div class="col-md-3"><div class="cardx total-card"><small>Abonado</small><h3 class="text-success">$0.00</h3></div></div>
+        <div class="col-md-3"><div class="cardx total-card"><small>Saldo</small><h3 class="text-danger">$726.80</h3></div></div>
+        <div class="col-md-3"><div class="cardx total-card"><small>Estado cuenta</small><br><span class="badgex b-danger mt-2">Pendiente</span></div></div>
+      </div>
+      <div class="cardx p-4 mb-4">
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <h5 class="fw-bold">Información técnica</h5>
+            <table class="table table-modern"><tbody><tr><td>Motor</td><td class="fw-bold">CHEVROLET LUV D-MAX DOHC 2.4</td></tr><tr><td>Diagnóstico</td><td>Revisión integral de block, bancada y cabezote.</td></tr><tr><td>Observaciones</td><td>Trabajo pendiente de validación técnica.</td></tr></tbody></table>
+          </div>
+          <div class="col-lg-6">
+            <h5 class="fw-bold">Cliente y responsable</h5>
+            <table class="table table-modern"><tbody><tr><td>Cliente</td><td class="fw-bold">Cliente esporádico</td></tr><tr><td>Mecánico</td><td>MST. IVAN LEON</td></tr><tr><td>Usuario</td><td>Administrador</td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+      <div class="cardx p-4">
+        <div class="section-head"><div><h4>Trabajos de mano de obra</h4><p>Servicios cargados a la orden</p></div><button class="btn btn-blue btn-sm">Agregar trabajo</button></div>
+        <div class="table-responsive"><table class="table table-modern"><thead><tr><th>Descripción</th><th>Cant.</th><th>Precio</th><th>Total</th><th>Operario</th><th>Terminado</th></tr></thead><tbody><tr><td class="fw-bold">MANDRILAR BIELAS</td><td>2</td><td>$20.00</td><td>$40.00</td><td>Sin asignar</td><td><span class="badgex b-gray">No</span></td></tr><tr><td class="fw-bold">ENCAMISADA DE BLOCK</td><td>4</td><td>$40.00</td><td>$160.00</td><td>Suarez Arana Juan</td><td><span class="badgex b-gray">No</span></td></tr></tbody></table></div>
+      </div>
+    </section>
+
+    <section id="pizarra" class="screen">
+      <div class="section-head">
+        <div><h4>Pizarra de producción</h4><p>Tablero visual para controlar el flujo del taller.</p></div>
+        <button class="btn btn-blue"><i class="bi bi-plus-circle me-1"></i> Agregar tarea</button>
+      </div>
+      <div class="kanban">
+        <div class="kanban-col"><h5>Recibido <span class="badgex b-rec">17</span></h5><div class="ticket"><b>OT #21</b><div class="subtext">CHEVROLET LUV D-MAX</div><hr><div class="subtext">Mecánico: MST. IVAN LEON</div><div class="bar"><span style="width:20%"></span></div></div><div class="ticket"><b>OT #23</b><div class="subtext">TOYOTA LAND CRUISER</div><hr><div class="subtext">MST. SOTIL VELEZ</div><div class="bar"><span style="width:12%"></span></div></div></div>
+        <div class="kanban-col"><h5>En proceso <span class="badgex b-pro">3</span></h5><div class="ticket"><b>OT #10</b><div class="subtext">MAZDA BT50 DIESEL</div><hr><div class="subtext">Operario asignado</div><div class="bar"><span style="width:58%"></span></div></div></div>
+        <div class="kanban-col"><h5>Terminado <span class="badgex b-ok">0</span></h5><div class="text-center text-muted mt-5">Sin órdenes terminadas</div></div>
+        <div class="kanban-col"><h5>Entregado <span class="badgex b-gray">0</span></h5><div class="text-center text-muted mt-5">Sin entregas registradas</div></div>
+      </div>
+    </section>
+
+    <section id="repuestos" class="screen"></section>
+    <section id="mano" class="screen"></section>
+    <section id="bodega" class="screen"></section>
+    <section id="clientes" class="screen"></section>
+    <section id="mecanicos" class="screen"></section>
+
+    <section id="cobrar" class="screen">
+      <div class="row g-3 mb-4">
+        <div class="col-md-3"><div class="cardx stat"><div class="iconbox bg-primary-subtle text-primary"><i class="bi bi-file-earmark-text"></i></div><div><small>Órdenes</small><h4>13</h4></div></div></div>
+        <div class="col-md-3"><div class="cardx stat"><div class="iconbox bg-warning-subtle text-warning"><i class="bi bi-wallet2"></i></div><div><small>Valor total</small><h4>$4.334</h4></div></div></div>
+        <div class="col-md-3"><div class="cardx stat"><div class="iconbox bg-success-subtle text-success"><i class="bi bi-check-circle"></i></div><div><small>Abonado</small><h4>$293</h4></div></div></div>
+        <div class="col-md-3"><div class="cardx stat"><div class="iconbox bg-danger-subtle text-danger"><i class="bi bi-exclamation-circle"></i></div><div><small>Saldo</small><h4>$4.040</h4></div></div></div>
+      </div>
+      <div class="cardx p-4">
+        <div class="section-head"><div><h4>Cuentas por cobrar</h4><p>Control de saldos pendientes y abonos parciales.</p></div></div>
+        <div class="table-responsive"><table class="table table-modern"><thead><tr><th>OT</th><th>Cliente</th><th>Mecánico</th><th>Estado</th><th>Total</th><th>Abonado</th><th>Saldo</th></tr></thead><tbody><tr><td class="order-id">#21</td><td>Cliente esporádico</td><td>MST. IVAN LEON</td><td><span class="badgex b-danger">Pendiente</span></td><td>$726.80</td><td>$0.00</td><td class="text-danger fw-bold">$726.80</td></tr><tr><td class="order-id">#18</td><td>MST. EDGAR BRIONES</td><td>MST. EDGAR</td><td><span class="badgex b-pro">Parcial</span></td><td>$233.00</td><td>$100.00</td><td class="text-danger fw-bold">$133.00</td></tr></tbody></table></div>
+      </div>
+    </section>
+
+  </main>
+</section>
+</div>
+
+<script>
+const titles={
+ dashboard:['Dashboard','Control operativo, financiero y técnico de la rectificadora'],
+ presentacion:['Presentación comercial','Vista para mostrar el software a clientes o inversionistas'],
+ ordenes:['Órdenes de trabajo','Consulta y control de trabajos activos'],
+ crear:['Nueva orden','Registro inicial de cliente, motor, diagnóstico y responsable'],
+ detalle:['Detalle de orden','Vista técnica, financiera y operativa de una orden'],
+ pizarra:['Pizarra de producción','Seguimiento visual del flujo de trabajo'],
+ repuestos:['Repuestos','Control de artículos, stock y precios'],
+ mano:['Mano de obra','Catálogo de trabajos y costos técnicos'],
+ bodega:['Bodega / Kardex','Movimientos de ingreso y egreso'],
+ clientes:['Clientes','Base de datos de clientes'],
+ mecanicos:['Mecánicos','Registro de responsables y contactos'],
+ cobrar:['Cuentas por cobrar','Saldos, abonos y pendientes']
+};
+function showScreen(id,el){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-itemx').forEach(n=>n.classList.remove('active'));
+  if(el) el.classList.add('active');
+  document.getElementById('pageTitle').textContent=titles[id]?.[0]||'RectiPro ERP';
+  document.getElementById('pageSubtitle').textContent=titles[id]?.[1]||'Sistema para rectificadoras';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+const orders=[
+ {n:23,fecha:'02/06/2026',cliente:'MST. SOTIL VELEZ',motor:'TOYOTA LAND CRUISER F 1.5',mecanico:'MST. SOTIL VELEZ',estado:'RECIBIDO',cuenta:'PENDIENTE',total:'$159.85',img:'NO'},
+ {n:22,fecha:'02/06/2026',cliente:'Cliente esporádico',motor:'CHEVROLET GRAND VITARA J20A SZ',mecanico:'MST. ZUMBA JHONNY',estado:'RECIBIDO',cuenta:'SIN VALOR',total:'$0.00',img:'NO'},
+ {n:21,fecha:'01/06/2026',cliente:'Cliente esporádico',motor:'CHEVROLET LUV D-MAX DOHC 2.4',mecanico:'MST. IVAN LEON',estado:'RECIBIDO',cuenta:'PENDIENTE',total:'$726.80',img:'SI'},
+ {n:20,fecha:'01/06/2026',cliente:'Cliente esporádico',motor:'HYUNDAI TUCSON IX 2.0',mecanico:'MST. ALVARO VERA',estado:'RECIBIDO',cuenta:'PENDIENTE',total:'$414.00',img:'SI'},
+ {n:18,fecha:'01/06/2026',cliente:'MST. EDGAR BRIONES',motor:'FORD F250/F350 4.9L',mecanico:'MST. EDGAR BRIONES',estado:'RECIBIDO',cuenta:'ABONADO',total:'$233.00',img:'SI'}
+];
+function cuentaBadge(c){return c==='ABONADO'?'<span class="badgex b-pro">Abonado</span>':c==='SIN VALOR'?'<span class="badgex b-gray">Sin valor</span>':'<span class="badgex b-danger">Pendiente</span>'}
+function rowDash(o){return `<tr><td class="order-id">#${o.n}</td><td><div class="motor">${o.motor}</div><div class="subtext">${o.cliente}</div></td><td>${o.mecanico}</td><td><span class="badgex b-rec">${o.estado}</span></td><td>${cuentaBadge(o.cuenta)}</td><td class="text-end fw-bold">${o.total}</td></tr>`}
+function rowList(o){return `<tr><td class="order-id">#${o.n}</td><td>${o.fecha}</td><td>${o.cliente}</td><td><div class="motor">${o.motor}</div></td><td>${o.mecanico}</td><td>${o.img==='SI'?'<span class="badgex b-ok">Sí</span>':'<span class="badgex b-gray">No</span>'}</td><td><span class="badgex b-rec">${o.estado}</span></td><td>${cuentaBadge(o.cuenta)}</td><td class="text-end fw-bold">${o.total}</td><td><button class="btn btn-soft btn-sm" onclick="showScreen('detalle')"><i class="bi bi-eye"></i></button></td></tr>`}
+document.getElementById('ordersDashboard').innerHTML=orders.map(rowDash).join('');
+document.getElementById('ordersList').innerHTML=orders.map(rowList).join('');
+
+function simpleModule(id,title,subtitle,headers,rows,button){
+  document.getElementById(id).innerHTML=`<div class="cardx p-4"><div class="section-head"><div><h4>${title}</h4><p>${subtitle}</p></div><button class="btn btn-blue">${button}</button></div><div class="searchbar mb-3"><input class="form-control" placeholder="Buscar registro..."></div><div class="table-responsive"><table class="table table-modern"><thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}<th></th></tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}<td><button class="btn btn-soft btn-sm"><i class="bi bi-pencil"></i></button></td></tr>`).join('')}</tbody></table></div></div>`;
+}
+simpleModule('repuestos','Repuestos y artículos','Catálogo de productos, stock y precios de venta.',['Código','Descripción','Categoría','Stock','P. venta'],[
+ ['021','VÁLVULA DE PRESIÓN DE ACEITE','REPUESTOS','<span class="text-danger fw-bold">0.00</span>','$0.00'],
+ ['020','BOCINES DE BIELA','REPUESTOS','<span class="text-danger fw-bold">0.00</span>','$0.00'],
+ ['015','RETENEDOR DE CIGÜEÑAL','REPUESTOS','<span class="text-success fw-bold">8.00</span>','$12.50']
+],'Nuevo artículo');
+simpleModule('mano','Mano de obra','Servicios técnicos configurables para cada orden.',['ID','Descripción','Departamento','Operario','Valor base'],[
+ ['14','ALINEAR BANCADA','BLOQUES','Pedro Alexander','$50.00'],
+ ['27','ARMAR CABEZOTE','CABEZOTES','Wilmer Crescencio','$20.00'],
+ ['31','MANDRILAR BIELAS','BIELAS','Sin asignar','$20.00']
+],'Nueva mano de obra');
+simpleModule('clientes','Clientes','Base comercial y técnica de clientes.',['Nombre','RUC/Cédula','Teléfono','Email','Estado'],[
+ ['ANYELI GARCIA','1208110302','0982877359','cliente@gmail.com','<span class="badgex b-ok">Activo</span>'],
+ ['VERA RODRIGUEZ CARLOS JAVIER','1203999667','0999999999','facturacion@hotmail.com','<span class="badgex b-ok">Activo</span>']
+],'Nuevo cliente');
+simpleModule('mecanicos','Mecánicos','Responsables, contactos y ubicación.',['Nombre','Teléfono','Ciudad','Especialidad','Estado'],[
+ ['MST. IVAN LEON','0994995467','PUEBLOVIEJO','Rectificación general','<span class="badgex b-ok">Activo</span>'],
+ ['MST. EDGAR BRIONES','0981376743','BALZAR','Motores diésel','<span class="badgex b-ok">Activo</span>']
+],'Nuevo mecánico');
+
+document.getElementById('bodega').innerHTML=`
+<div class="cardx p-4">
+  <div class="section-head"><div><h4>Bodega / Kardex</h4><p>Registra ingresos, egresos y movimientos de inventario.</p></div><button class="btn btn-blue">Guardar movimiento</button></div>
+  <div class="row g-3 mb-4">
+    <div class="col-md-3"><select class="form-select"><option>Ingreso</option><option>Egreso</option></select></div>
+    <div class="col-md-3"><input type="date" class="form-control"></div>
+    <div class="col-md-3"><input class="form-control" placeholder="Motivo"></div>
+    <div class="col-md-3"><input class="form-control" placeholder="Documento"></div>
+  </div>
+  <div class="searchbar mb-3"><div class="row g-2"><div class="col-md-6"><input class="form-control" placeholder="Producto"></div><div class="col-md-2"><input class="form-control" value="1"></div><div class="col-md-2"><input class="form-control" value="0.00"></div><div class="col-md-2"><button class="btn btn-blue w-100">Agregar</button></div></div></div>
+  <table class="table table-modern"><thead><tr><th>Producto</th><th>Cantidad</th><th>Precio unitario</th><th>Subtotal</th></tr></thead><tbody><tr><td colspan="4" class="text-center text-muted py-5">Agrega productos para registrar el movimiento</td></tr></tbody></table>
+</div>`;
+</script>
+</body>
+</html>
